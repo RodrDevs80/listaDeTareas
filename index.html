@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="./img/Check-Logo.png" type="image/x-icon">
+    <script defer src="./listaTareasLogica.js"></script>
+    <script src="https://kit.fontawesome.com/ca5ef2b8ee.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Lista de Tareas</title>
+</head>
+
+<body>
+    <main class="cuerpo">
+        <section class="cuerpo-lista" id="cuerpo-lista">
+            <span class="fecha" id="fecha"></span>
+            <h1>Hola,<span id="nombre">Usuario</span></h1>
+            <h2>Organiza tus Tareas</h2>
+            <section class="contenedor-agregar-tarea" id="contenedor-agregar-tarea">
+                <input type="text" class="agregar-tarea" id="agregar-tarea" placeholder="agregar una tarea">
+                <i id="btn-agregar" class="fa-solid fa-circle-plus icono-agregar"></i>
+            </section>
+            <h2>Estas son tus Tareas Pendientes:</h2>
+            <section class="listado-tareas" id="listado-tareas">
+            </section>
+            </>
+    </main>
+
+</body>
+
+</html>
