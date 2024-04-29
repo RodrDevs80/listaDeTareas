@@ -6,10 +6,12 @@ const btnAgregar = document.getElementById('btn-agregar');
 const fecha = document.getElementById('fecha');
 const timestampActual = new Date;
 const nombre = document.getElementById('nombre');
-let contador = 0;
+let contador;
 const check = "fa-circle-check";
 const unCheck = "fa-circle";
 const tachado = 'tachado';
+let TAREAS = [];
+
 //funciones
 function fechaActual() {
     const fechaActual = new Date();
@@ -23,6 +25,8 @@ function fechaActual() {
     return `Fecha actual: ${año}-${mes}-${dia} ${hora}:${minutos}:${segundos}`;
 
 }
+
+
 function cargarFecha(nodefecha) {
     const fechaDeLaListaDetareas = fechaActual();
     nodefecha.textContent = `${fechaDeLaListaDetareas}`;
@@ -62,11 +66,13 @@ function tareaRealizada(element) {
     element.classList.toggle(unCheck);
     //parentNode ->identifica elementos padres
     element.parentNode.querySelector('.txt').classList.toggle(tachado);
+    TAREAS[element.id].realizado = TAREAS[element.id].realizado ? false : true;
 }
 //función eliminar 
 function eliminarTarea(element) {
     listadoTareas.removeChild(element.parentNode);
     //element.parentNode.parentNode.removeChild(element.parentNode);
+    TAREAS[element.id].eliminado = true;
 }
 
 cargarFecha(fecha);
@@ -78,6 +84,14 @@ btnAgregar.addEventListener('click', (e) => {
         return;
     }
     sumarTarea(tarea, contador, false, false);
+    TAREAS.push({
+        nombre: tarea,
+        id: contador,
+        realizado: false,
+        eliminado: false
+    })
+    localStorage.setItem('TODO', JSON.stringify(TAREAS));
+    //console.log(TAREAS);
     inputTarea.value = '';
     contador++;
 });
@@ -89,6 +103,14 @@ document.addEventListener('keypress', (e) => {
             return;
         }
         sumarTarea(tarea, contador, false, false);
+        TAREAS.push({
+            nombre: tarea,
+            id: contador,
+            realizado: false,
+            eliminado: false
+        })
+        localStorage.setItem('TODO', JSON.stringify(TAREAS));
+        //console.log(TAREAS);
         inputTarea.value = '';
         contador++;
     }
@@ -103,6 +125,23 @@ listadoTareas.addEventListener('click', (e) => {
     } else if (elementData === 'eliminado') {
         eliminarTarea(element);
     }
-})
+    localStorage.setItem('TODO', JSON.stringify(TAREAS));
+});
 
+//localStorage
+let data = localStorage.getItem('TODO');
+if (data) {
+    TAREAS = JSON.parse(data);
+    contador = TAREAS.length;
+    cargarTareas(TAREAS);
+} else {
+    TAREAS = [];
+    contador = 0;
+}
 
+function cargarTareas(DATA) {
+    DATA.forEach((element) => {
+        sumarTarea(element.nombre, element.id, element.realizado, element.eliminado);
+    });
+
+}
